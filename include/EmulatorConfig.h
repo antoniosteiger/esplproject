@@ -2,8 +2,8 @@
 #define __EMULATOR_CONFIG_H__
 
 #define WINDOW_TITLE "My FreeRTOS Emulator"
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 1000
 #define RESOURCES_DIRECTORY "../resources"
 #define FONTS_DIRECTORY "../resources/fonts"
 #define DEFAULT_FONT "IBMPlexSans-Medium.ttf"

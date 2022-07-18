@@ -38,7 +38,7 @@
  * retriving the most recent copy of the button status lookup table exposed
  * through the FreeRTOS queue @ref buttonInputQueue.
  *
- * @ref buttonInputQueue holds a single array of unsigned chars of the length
+ * @ref  holds a single array of unsigned chars of the length
  * SDL_NUM_SCANCODES. The scancodes that are defind in the SDL header
  * SDL_scancode.h are used as the indicies when accessing the stored data in
  * the table.

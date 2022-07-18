@@ -69,7 +69,7 @@
  * Sets the height (in pixels) of the screen
  */
 #ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT 480
+#define SCREEN_HEIGHT 480 //Modified
 #endif //SCREEN_HEIGHT
 
 /**

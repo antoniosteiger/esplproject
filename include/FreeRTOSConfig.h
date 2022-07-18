@@ -81,6 +81,7 @@
 #define configUSE_CO_ROUTINES           1
 #define configUSE_MUTEXES               1
 #define configUSE_TASK_NOTIFICATIONS    1
+#define configTASK_NOTIFICATION_ARRAY_ENTRIES 4
 #define configUSE_COUNTING_SEMAPHORES   1
 #define configUSE_ALTERNATIVE_API       0
 #define configUSE_RECURSIVE_MUTEXES     1
@@ -88,6 +89,14 @@
 #define configUSE_APPLICATION_TASK_TAG  1
 #define configQUEUE_REGISTRY_SIZE       0
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY    1
+
+// Custom Modifications:
+#define configUSE_TIMERS 1
+#define configTIMER_QUEUE_LENGTH                10
+#define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 2)
+#define configTIMER_TASK_PRIORITY               (configMAX_PRIORITIES - 1)
+
+
 
 #define configMAX_PRIORITIES        ( 10 )
 #define configMAX_CO_ROUTINE_PRIORITIES ( 2 )
