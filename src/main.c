@@ -16,6 +16,7 @@
 #include "TUM_Print.h"
 //#include "TUM_Draw.h"
 
+#include "objects.h"
 #include "sound.h"
 #include "graphics.h"
 #include "logic.h"
@@ -27,6 +28,17 @@
 //Defines
 #define mainGENERIC_STACK_SIZE ((unsigned short)2560)
 #define mainGENERIC_PRIORITY (tskIDLE_PRIORITY)
+
+gameparammutex parameters;
+statechar state;
+hs highscores;
+buttons_buffer_t buttons;
+struct game game;
+struct playerhitbox playerhitbox;
+struct isgameactive isgameactive;
+
+int enemyid[ENEMYROW][ENEMYCOL][2] = { 0 };
+int projectileid[MAXPROJECTILES][2] = { 0 };
 
 // Semaphores
 // typedef struct buttons_buffer {
@@ -67,8 +79,33 @@ int main(int argc, char *argv[])
     //     goto err_init_safe_print;
     // }
 
+    parameters.lock = xSemaphoreCreateMutex();
+    state.lock = xSemaphoreCreateMutex();
+    highscores.lock = xSemaphoreCreateMutex();
+    buttons.lock = xSemaphoreCreateMutex();
+
+    isgameactive.lock = xSemaphoreCreateMutex();
+    if(xSemaphoreTake(isgameactive.lock, 0) == pdTRUE) {
+        isgameactive.isit = 0;
+        xSemaphoreGive(isgameactive.lock);
+    }
+
+    game.position.lock = xSemaphoreCreateMutex();
+    game.playershot.lock = xSemaphoreCreateMutex();
+    game.gamespeed.lock = xSemaphoreCreateMutex();
+    playerhitbox.lock = xSemaphoreCreateMutex();
+    game.projectileptrs.lock = xSemaphoreCreateMutex(); 
+    game.enemyptrs.lock = xSemaphoreCreateMutex();
+    game.projectilestates.lock = xSemaphoreCreateMutex();
+    game.enemystates.lock = xSemaphoreCreateMutex();
+    game.position.lock = xSemaphoreCreateMutex();
+    game.playershot.lock = xSemaphoreCreateMutex();
+    
     //Initializations:
     prints("Initializing: \n");
+
+    if (initLogic() == -1)
+        goto err_init_logic;
     
     if (initGraphics(bin_folder_path) == -1)
         goto err_init_graphics;
@@ -78,9 +115,6 @@ int main(int argc, char *argv[])
 
     if (initSound(bin_folder_path) == -1)
         goto err_init_sound;
-
-    if (initLogic() == -1)
-        goto err_init_logic;
 
 
 
